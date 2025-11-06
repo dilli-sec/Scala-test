@@ -1,0 +1,11 @@
+import java.io.{ByteArrayInputStream, ObjectInputStream}
+
+object InsecureDeserialization {
+  def deserializeUser(bytes: Array[Byte]): Any = {
+    // VULNERABLE: deserializing untrusted bytes using Java Serialization
+    val in = new ObjectInputStream(new ByteArrayInputStream(bytes))
+    val obj = in.readObject()
+    in.close()
+    obj
+  }
+}
