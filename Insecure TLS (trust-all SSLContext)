@@ -1,0 +1,14 @@
+import javax.net.ssl.{SSLContext, X509TrustManager}
+
+object InsecureTls {
+  def createInsecureSslContext(): SSLContext = {
+    val ctx = SSLContext.getInstance("TLS")
+    val tm = new X509TrustManager {
+      def getAcceptedIssuers() = null
+      def checkClientTrusted(certs: Array[java.security.cert.X509Certificate], s: String) = {}
+      def checkServerTrusted(certs: Array[java.security.cert.X509Certificate], s: String) = {}
+    }
+    ctx.init(null, Array(tm), new java.security.SecureRandom())
+    ctx
+  }
+}
