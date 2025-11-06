@@ -1,0 +1,8 @@
+import java.util.Random
+
+object InsecureRandomExample {
+  val rnd = new Random(12345) // VULNERABLE: fixed seed
+  def generateToken(): String = {
+    new java.math.BigInteger(130, rnd).toString(32)
+  }
+}
